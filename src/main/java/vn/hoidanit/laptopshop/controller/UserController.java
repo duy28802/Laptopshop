@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.model.User;
 import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
@@ -36,6 +37,14 @@ public class UserController {
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("users1", users);
         return "admin/user/table-user";
+    }
+
+    @RequestMapping("/admin/user/{hoidanit}")
+    public String getUserDetailPage(Model model, @PathVariable long hoidanit) {
+        System.out.println("check path id" + hoidanit);
+
+        model.addAttribute("id", hoidanit);
+        return "admin/user/user-detail";
     }
 
     @RequestMapping("/admin/user/create") // GET
