@@ -6,11 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import vn.hoidanit.laptopshop.model.User;
 import vn.hoidanit.laptopshop.service.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -59,4 +62,37 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
+    @RequestMapping("/admin/user/update/{id}") // GET
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
+        User currentUser = this.userService.getUserById(id);
+        model.addAttribute("newUser", currentUser);
+        return "admin/user/update";
+    }
+
+    @PostMapping("/admin/user/update")
+    public String getPostUpdateUser(Model model, @ModelAttribute("newUser") User hoidanit) {
+        User currentUser = this.userService.getUserById(hoidanit.getId());
+        if (currentUser != null) {
+            currentUser.setAddress(hoidanit.getAddress());
+            currentUser.setFullName(hoidanit.getFullName());
+            currentUser.setphoneNumber(hoidanit.getPhoneNumber());
+            this.userService.handleSaveUser(currentUser);
+        }
+        return "redirect:/admin/user";
+    }
+
+    @GetMapping("/admin/user/delete/{id}")
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        // User user = new User();
+        // user.setId(id);
+        model.addAttribute("newUser", new User());
+        return "/admin/user/delete";
+    }
+
+    @PostMapping("/admin/user/delete")
+    public String getPostDeleteUser(Model model, @ModelAttribute("newUser") User eric) {
+        this.userService.deleteAUser(eric.getId());
+        return "redirect:/admin/user";
+    }
 }
