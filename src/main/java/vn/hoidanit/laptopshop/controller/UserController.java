@@ -39,11 +39,11 @@ public class UserController {
         return "admin/user/table-user";
     }
 
-    @RequestMapping("/admin/user/{hoidanit}")
-    public String getUserDetailPage(Model model, @PathVariable long hoidanit) {
-        System.out.println("check path id" + hoidanit);
-
-        model.addAttribute("id", hoidanit);
+    @RequestMapping("/admin/user/{id}")
+    public String getUserDetailPage(Model model, @PathVariable long id) {
+        User user = this.userService.getUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("id", id);
         return "admin/user/user-detail";
     }
 
@@ -58,4 +58,5 @@ public class UserController {
         this.userService.handleSaveUser(hoidanit);
         return "redirect:/admin/user";
     }
+
 }
