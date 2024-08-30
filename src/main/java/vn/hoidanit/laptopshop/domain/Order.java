@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.model;
+package vn.hoidanit.laptopshop.domain;
 
 import java.util.List;
 import jakarta.persistence.Entity;
