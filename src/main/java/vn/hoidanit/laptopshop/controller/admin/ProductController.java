@@ -66,15 +66,6 @@ public class ProductController {
         return "redirect:/admin/product";
     }
 
-    // DETAIL
-    @GetMapping("/admin/product/{id}")
-    public String getProductDetailPage(Model model, @PathVariable long id) {
-        Product pr = this.productService.fetchProductById(id).get();
-        model.addAttribute("product", pr);
-        model.addAttribute("id", id);
-        return "admin/product/detail";
-    }
-
     // UPDATE
     @GetMapping("/admin/product/update/{id}")
     public String getUpdateProductPage(Model model, @PathVariable long id) {
@@ -126,4 +117,12 @@ public class ProductController {
         return "redirect:/admin/product";
     }
 
+    // DETAIL
+    @GetMapping("/admin/product/{id}")
+    public String getProductDetailPage(Model model, @PathVariable long id) {
+        Product pr = this.productService.fetchProductById(id).get();
+        model.addAttribute("product", pr);
+        model.addAttribute("id", id);
+        return "admin/product/detail";
+    }
 }
