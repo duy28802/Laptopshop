@@ -53,9 +53,14 @@ public class HomePageController {
     public String handleRegister(
             @ModelAttribute("registerUser") @Valid RegisterDTO registerDTO,
             BindingResult BindingResult) {
-        List<FieldError> errors = BindingResult.getFieldErrors();
-        for (FieldError error : errors) {
-            System.out.println(">>>>" + error.getField() + "  - " + error.getDefaultMessage());
+        // List<FieldError> errors = BindingResult.getFieldErrors();
+        // for (FieldError error : errors) {
+        // System.out.println(">>>>" + error.getField() + " - " +
+        // error.getDefaultMessage());
+        // }
+
+        if (BindingResult.hasErrors()) {
+            return "client/auth/register";
         }
 
         User user = this.userService.registerDTOtoUser(registerDTO);
