@@ -33,7 +33,7 @@ public class User {
 
     @NotNull
     @Size(min = 3)
-    @StrongPassword
+    // @StrongPassword
     private String password;
 
     @NotNull
