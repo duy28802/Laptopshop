@@ -75,7 +75,7 @@ public class UserController {
 
         // validate
         if (newUserBindingResult.hasErrors()) {
-            return "/admin/user/create"; // no redirect
+            return "admin/user/create"; // no redirect
         }
 
         //
@@ -117,7 +117,7 @@ public class UserController {
         // User user = new User();
         // user.setId(id);
         model.addAttribute("newUser", new User());
-        return "/admin/user/delete";
+        return "admin/user/delete";
     }
 
     @PostMapping("/admin/user/delete")

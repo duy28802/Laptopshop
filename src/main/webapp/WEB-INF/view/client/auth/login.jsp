@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-
+        <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
             <!DOCTYPE html>
             <html lang="en">
 
@@ -11,8 +10,8 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="" />
                 <meta name="author" content="" />
-                <title>Login - SB Admin</title>
-                <link href="css/styles.css" rel="stylesheet" />
+                <title>Login - Laptopshop</title>
+                <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
 
@@ -28,17 +27,31 @@
                                                 <h3 class="text-center font-weight-light my-4">Login</h3>
                                             </div>
                                             <div class="card-body">
-                                                <form>
-                                                    <div class="form-floating mb-3">
-                                                        <input class="form-control" type="email"
-                                                            placeholder="name@example.com" />
-                                                        <label for="inputEmail">Email address</label>
-                                                    </div>
+                                                <form method="post" action="/login">
+                                                    <c:if test="${param.error != null}">
+                                                        <div class="my-2" style="color: red;">Invalid email or password.
+                                                        </div>
+                                                    </c:if>
+
+                                                    <c:if test="${param.logout != null}">
+                                                        <div class="my-2" style="color: green;">Logout Successfully.
+                                                        </div>
+                                                    </c:if>
 
                                                     <div class="form-floating mb-3">
+                                                        <input class="form-control" type="email"
+                                                            placeholder="name@example.com" name="username" />
+                                                        <label>Email address</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
                                                         <input class="form-control" type="password"
-                                                            placeholder="Password" />
-                                                        <label for="inputPassword">Password</label>
+                                                            placeholder="Password" name="password" />
+                                                        <label>Password</label>
+                                                    </div>
+
+                                                    <div>
+                                                        <input type="hidden" name="${_csrf.parameterName}"
+                                                            value="${_csrf.token}" />
                                                     </div>
 
                                                     <div class="mt-4 mb-0">
@@ -51,7 +64,7 @@
                                                 </form>
                                             </div>
                                             <div class="card-footer text-center py-3">
-                                                <div class="small"><a href="register.html">Need an account? Sign up!</a>
+                                                <div class="small"><a href="/register">Need an account? Sign up!</a>
                                                 </div>
                                             </div>
                                         </div>
