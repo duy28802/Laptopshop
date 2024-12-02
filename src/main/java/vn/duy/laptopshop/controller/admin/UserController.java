@@ -66,7 +66,7 @@ public class UserController {
 
     @PostMapping(value = "/admin/user/create")
     public String createUserPage(Model model,
-            @ModelAttribute("newUser") @Valid User duy, BindingResult newUserBindingResult,
+            @ModelAttribute("newUser") @Valid User user, BindingResult newUserBindingResult,
             @RequestParam("duyFile") MultipartFile file) {
         List<FieldError> errors = newUserBindingResult.getFieldErrors();
         for (FieldError error : errors) {
@@ -80,13 +80,13 @@ public class UserController {
 
         //
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
-        String hashPassword = this.passwordEncoder.encode(duy.getPassword());
+        String hashPassword = this.passwordEncoder.encode(user.getPassword());
 
-        duy.setAvatar(avatar);
-        duy.setPassword(hashPassword);
-        duy.setRole(this.userService.getRoleByName(duy.getRole().getName()));
+        user.setAvatar(avatar);
+        user.setPassword(hashPassword);
+        user.setRole(this.userService.getRoleByName(user.getRole().getName()));
         // save
-        this.userService.handleSaveUser(duy);
+        this.userService.handleSaveUser(user);
         return "redirect:/admin/user";
     }
 
@@ -99,12 +99,12 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String getPostUpdateUser(Model model, @ModelAttribute("newUser") User duy) {
-        User currentUser = this.userService.getUserById(duy.getId());
+    public String getPostUpdateUser(Model model, @ModelAttribute("newUser") User user) {
+        User currentUser = this.userService.getUserById(user.getId());
         if (currentUser != null) {
-            currentUser.setAddress(duy.getAddress());
-            currentUser.setFullName(duy.getFullName());
-            currentUser.setphoneNumber(duy.getPhoneNumber());
+            currentUser.setAddress(user.getAddress());
+            currentUser.setFullName(user.getFullName());
+            currentUser.setPhoneNumber(user.getPhoneNumber());
             this.userService.handleSaveUser(currentUser);
         }
         return "redirect:/admin/user";
