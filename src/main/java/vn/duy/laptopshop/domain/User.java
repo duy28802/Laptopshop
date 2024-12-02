@@ -12,8 +12,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
+
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import vn.duy.laptopshop.service.validator.StrongPassword;
 
 @Entity
 @Table(name = "users")
@@ -24,7 +27,9 @@ public class User {
     private long id;
 
     @NotNull
+    @Email()
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
 
     @NotNull
@@ -52,12 +57,6 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Cart cart;
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
-                + ", address=" + address + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + "]";
-    }
 
     public Role getRole() {
         return role;
@@ -133,6 +132,12 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
+                + ", address=" + address + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + "]";
     }
 
     public Cart getCart() {

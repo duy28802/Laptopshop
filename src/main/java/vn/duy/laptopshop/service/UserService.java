@@ -7,29 +7,26 @@ import org.springframework.stereotype.Service;
 import vn.duy.laptopshop.domain.Role;
 import vn.duy.laptopshop.domain.User;
 import vn.duy.laptopshop.domain.dto.RegisterDTO;
+import vn.duy.laptopshop.repository.OrderRepository;
+import vn.duy.laptopshop.repository.ProductRepository;
 import vn.duy.laptopshop.repository.RoleRepository;
 import vn.duy.laptopshop.repository.UserRepository;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     public UserService(UserRepository userRepository,
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository,
+            ProductRepository productRepository,
+            OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-    }
-
-    public String handleHello() {
-        return "Hello from Service";
-    }
-
-    public User handleSaveUser(User user) {
-        User eric = this.userRepository.save(user);
-        System.out.println(eric);
-        return eric;
+        this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
     }
 
     public List<User> getAllUsers() {
@@ -38,6 +35,12 @@ public class UserService {
 
     public List<User> getAllUsersByEmail(String email) {
         return this.userRepository.findOneByEmail(email);
+    }
+
+    public User handleSaveUser(User user) {
+        User eric = this.userRepository.save(user);
+        System.out.println(eric);
+        return eric;
     }
 
     public User getUserById(long id) {
@@ -66,5 +69,17 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    public long countUsers() {
+        return this.userRepository.count();
+    }
+
+    public long countProducts() {
+        return this.productRepository.count();
+    }
+
+    public long countOrders() {
+        return this.orderRepository.count();
     }
 }

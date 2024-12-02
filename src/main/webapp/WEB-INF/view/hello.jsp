@@ -21,10 +21,10 @@
             hello form jsp
             <h1>
                 <!-- <c:out value="${eric}" /> jstl -->
-                ${eric} <!--jsp-->
+                ${d} <!--jsp-->
             </h1>
             <h2>
-                ${hoidanit}
+                ${duy}
             </h2>
 
             <button class="btn btn-warning">Submit</button>
