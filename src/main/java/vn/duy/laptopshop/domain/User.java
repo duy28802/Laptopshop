@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 
 import jakarta.validation.constraints.NotEmpty;
@@ -52,7 +53,10 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    List<Order> orders;
+    private List<Order> orders;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 
     public Role getRole() {
         return role;
